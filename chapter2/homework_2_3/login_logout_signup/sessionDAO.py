@@ -38,7 +38,7 @@ class SessionDAO:
         session = {'username': username, '_id': session_id}
 
         try:
-            self.sessions.insert(session)
+            self.sessions.insert_one(session)
         except:
             print "Unexpected error on start_session:", sys.exc_info()[0]
             return None
@@ -51,7 +51,7 @@ class SessionDAO:
         if session_id is None:
             return
 
-        self.sessions.remove({'_id': session_id})
+        self.sessions.delete_one({'_id': session_id})
 
         return
 

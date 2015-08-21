@@ -3,8 +3,7 @@ import pymongo
 import sys
 
 # establish a connection to the database
-connection = pymongo.Connection("mongodb://localhost", safe=True)
-
+connection = pymongo.MongoClient("mongodb://localhost")
 
 
 def insert():
@@ -15,18 +14,18 @@ def insert():
 
     print "insert, reporting for duty"
 
-    richard ={"name":"Richard Kreuter", "company":"10gen",
+    richard ={"name":"Richard Kreuter", "company":"MongoDB",
               "interests":['horses', 'skydiving', 'fencing']}    
-    andrew = {"_id":"erlichson", "name":"Andrew Erlichson", "company":"10gen",
+    andrew = {"_id":"erlichson", "name":"Andrew Erlichson", "company":"MongoDB",
               "interests":['running', 'cycling', 'photography']}
 
 
     try:
-        people.insert(richard)
-        people.insert(andrew)
+        people.insert_one(richard)
+        people.insert_one(andrew)
 
-    except:
-        print "Unexpected error:", sys.exc_info()[0]
+    except Exception as e:
+        print "Unexpected error:", type(e), e
 
     print(richard)
     print(andrew)

@@ -1,6 +1,3 @@
-
-
-#
 # Copyright (c) 2008 - 2013 10gen, Inc. <http://10gen.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-#
+
 import hmac
 import random
 import string
@@ -56,6 +52,10 @@ class UserDAO:
             # XXX HW 2.3 Students Work Here
             # you will need to retrieve right document from the users collection.
             print "This space intentionally left blank."
+
+            query = {'_id': username}
+
+            user = self.users.find_one(query)
         except:
             print "Unable to query database for user"
 
@@ -88,6 +88,7 @@ class UserDAO:
 
             print "This space intentionally left blank."
 
+            self.users.insert_one(user)
         except pymongo.errors.OperationFailure:
             print "oops, mongo error"
             return False
@@ -96,5 +97,3 @@ class UserDAO:
             return False
 
         return True
-
-

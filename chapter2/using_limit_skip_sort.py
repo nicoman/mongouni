@@ -3,7 +3,7 @@ import pymongo
 import sys
 
 # establish a connection to the database
-connection = pymongo.Connection("mongodb://localhost", safe=True)
+connection = pymongo.MongoClient("mongodb://localhost")
 
 # get a handle to the school database
 db=connection.school
@@ -23,12 +23,13 @@ def find():
 
         #cursor = cursor.sort('student_id', pymongo.ASCENDING).skip(4).limit(1)
         
-        cursor = cursor.sort([('student_id',pymongo.ASCENDING),('score',pymongo.DESCENDING)])
+        cursor = cursor.sort([('student_id',pymongo.ASCENDING),
+                              ('score',pymongo.DESCENDING)])
 
 
 
-    except:
-        print "Unexpected error:", sys.exc_info()[0]
+    except Exception as e:
+        print "Unexpected error:", type(e), e
 
     for doc in cursor:
         print doc
@@ -43,8 +44,8 @@ def find_one():
     try:
         doc = scores.find_one(query)
         
-    except:
-        print "Unexpected error:", sys.exc_info()[0]
+    except Exception as e:
+        print "Unexpected error:", type(e), e
 
     
     print doc
